@@ -1,31 +1,29 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const UserRoute = (path, component) => {
-    return class extends React.Component {
-        constructor(props) {
-            super(props);
-            this.state = {
-                auth: false
-            }
-        }
+class UserRoute extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-        render() {
-            return (
-                <Route path='/user/index' component={component} />
-                /*
-                <Route {...rest} render={props => (
-                    this.state.auth
-                        ? (<Component {...props} />)
-                        : (<Redirect to={{pathname: '/user/login', state: {from: props.location}}}/>))}
-                />*/
-            );
-        }
+    render() {
+        const {logged, component: Component} = this.props;
 
-        componentDidMount(){
-
-        }
+        return (
+            <Route render={props => (
+                logged
+                    ? (<Component {...props} />)
+                    : (<Redirect to={{pathname: '/user/login', state: {from: props.location.pathname}}}/>)
+            )}/>
+        );
     }
 }
 
-export default UserRoute;
+function mapStateToProps(state) {
+    return {
+        logged: state.user.userData != null
+    }
+}
+
+export default connect(mapStateToProps)(UserRoute);

@@ -9,6 +9,7 @@ import HomeIndex from './containers/home/HomeIndex';
 import UserLogin from './containers/user/UserLogin';
 import UserIndex from './containers/user/UserIndex';
 
+import HomeTest from './containers/home/HomeTest';
 import UserRoute from './routes/UserRoute';
 
 if (module.hot) {
@@ -22,6 +23,7 @@ ReactDOM.render(
                 <Route exact path='/' component={HomeIndex} />
                 <Route path='/user/login' component={UserLogin} />
                 <UserRoute path='/user/index' component={UserIndex} />
+                <UserRoute path='/home/test' component={HomeTest} />
             </Switch>
         </HashRouter>
     </Provider>,

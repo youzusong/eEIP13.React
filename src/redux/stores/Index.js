@@ -2,11 +2,17 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import appReducers from '../reducers/Index';
 import thunk from 'redux-thunk';
 
-const initState = {};
+const getPreState = () => {
+    return {
+
+    };
+};
+
+const preState = getPreState();
 
 const appStore = createStore(
     appReducers,
-    initState,
+    preState,
     compose(
         applyMiddleware(thunk),
         window.devToolsExtension ? window.devToolsExtension() : f => f
