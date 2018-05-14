@@ -4,9 +4,12 @@ import { BrowserRouter, HashRouter, Route, Link, Switch } from 'react-router-dom
 import { Provider } from 'react-redux';
 
 import appStore from './redux/stores/Index';
+
 import HomeIndex from './containers/home/HomeIndex';
-import AccountLogin from './containers/account/AccountLogin';
+import UserLogin from './containers/user/UserLogin';
 import UserIndex from './containers/user/UserIndex';
+
+import UserRoute from './routes/UserRoute';
 
 if (module.hot) {
     module.hot.accept();
@@ -17,8 +20,8 @@ ReactDOM.render(
         <HashRouter>
             <Switch>
                 <Route exact path='/' component={HomeIndex} />
-                <Route path='/account/login' component={AccountLogin} />
-                <Route path='/user/index' component={UserIndex} />
+                <Route path='/user/login' component={UserLogin} />
+                <UserRoute path='/user/index' component={UserIndex} />
             </Switch>
         </HashRouter>
     </Provider>,
