@@ -36,12 +36,13 @@ class AccountLogin extends React.Component {
             fetch('http://localhost:3000/user/login', {
                 method: 'POST',
                 mode: 'cors',
-                body: 'username=' + username.value +'&password=' + password.value,
-                //body: {'username' : username.value, 'password' : password.value },
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                     //'Content-Type': 'application/json'
-                }
+                },
+                body: 'username=' + username.value +'&password=' + password.value,
+                //body: JSON.stringify({username: username.value, password: password.value})
+
             }).then(res => {
                 return res.json();
             }).then(json => {
