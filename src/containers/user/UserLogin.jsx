@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import fetch  from 'isomorphic-fetch';
 
 class AccountLogin extends React.Component {
 
@@ -10,7 +11,6 @@ class AccountLogin extends React.Component {
     }
 
     render() {
-
         return (
             <div>
 
@@ -33,6 +33,26 @@ class AccountLogin extends React.Component {
         const {username, password} = this.refs;
 
         try {
+            fetch('http://localhost:3000/user/login', {
+                method: 'POST',
+                mode: 'cors',
+                body: 'username=' + username.value +'&password=' + password.value,
+                //body: {'username' : username.value, 'password' : password.value },
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                    //'Content-Type': 'application/json'
+                }
+            }).then(res => {
+                return res.json();
+            }).then(json => {
+                console.log(json);
+            }).catch(err => {
+                alert(err);
+            });
+
+            return;
+
+
             // 执行异步登入...
             this.props.login({
                 uname: username.value
