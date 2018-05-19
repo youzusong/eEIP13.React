@@ -20,12 +20,14 @@ router.post('/login', function(ctx, next){
     let password = form.password;
 
     let result = {
-      error: null,
-      token: null
+        error: null,
+        token: null,
+        username: null
     };
 
     if(username == 'test' && password == 'test'){
         result.token = '123456';
+        result.username = 'you';
     }else{
         result.error = '帳號密碼錯誤';
     }
@@ -37,7 +39,6 @@ router.post('/login', function(ctx, next){
     ctx.set('Access-Control-Allow-Headers', 'Content-Type');
     ctx.set('Access-Control-Max-Age', 3600);
 
-    console.log('xxxxxxxx');
 });
 
 module.exports = router;
