@@ -105,14 +105,14 @@ class AccountLogin extends React.Component {
 
 function mapStateToProps(store) {
     return {
-        logged: store.user.userData != null
+        logged: store.user.logged
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         login: (userData) => {
-            dispatch({type: UserActions.USER_LOGIN_SUCCESS, userData: userData})
+            dispatch({type: UserActions.USER_LOGIN, userData: userData})
         }
     }
 }

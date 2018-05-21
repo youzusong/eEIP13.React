@@ -22,7 +22,7 @@ class UserRoute extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        logged: state.user.userData != null
+        logged: state.user.logged
     }
 }
 
