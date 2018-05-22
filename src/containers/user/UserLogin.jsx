@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import fetch  from 'isomorphic-fetch';
-
 import * as UserActions from 'root/redux/constants/User';
-import LoginPanel from 'root/components/user/LoginPanel';
+import LoginPanel from 'root/components/User/LoginPanel';
+import PageNavBar from 'root/components/Common/PageNavBar';
+
 
 class AccountLogin extends React.Component {
 
@@ -21,7 +21,12 @@ class AccountLogin extends React.Component {
         const {logging} = this.state;
 
         return (
-            <LoginPanel logging={logging} loginHandler={this.loginHandler}/>
+            <div>
+                <PageNavBar title="會員登入" />
+                <LoginPanel logging={logging} loginHandler={this.loginHandler} />
+
+            </div>
+
         );
     }
 
@@ -33,24 +38,14 @@ class AccountLogin extends React.Component {
     }
 
     // 登入
-    loginHandler(eUsername, ePassword) {
+    loginHandler(username, passowrd) {
         if (this.state.logging)
             return;
 
         const postData = {
-            username: eUsername.value,
-            password: ePassword.value
+            username: username,
+            password: passowrd
         };
-
-        if(!postData.username){
-            eUsername.focus();
-            return;
-        }
-
-        if(!postData.password){
-            ePassword.focus();
-            return;
-        }
 
         this.setState({
             logging: true
