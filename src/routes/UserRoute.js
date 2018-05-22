@@ -14,7 +14,7 @@ class UserRoute extends React.Component {
             <Route render={props => (
                 logged
                     ? (<Component {...props} />)
-                    : (<Redirect to={{pathname: '/user/login', state: {from: props.location.pathname}}}/>)
+                    : (<Redirect to={{pathname: '/account/login', state: {from: props.location.pathname}}}/>)
             )}/>
         );
     }

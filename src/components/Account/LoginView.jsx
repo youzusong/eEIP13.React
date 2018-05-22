@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputItem, Button, WhiteSpace, WingBlank  } from 'antd-mobile';
+import { Link } from 'react-router-dom';
+import { Flex, InputItem, Button, WhiteSpace, WingBlank  } from 'antd-mobile';
+require('../Common/Style.css');
 
-class LoginPanel extends React.Component {
+class LoginView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -60,14 +62,23 @@ class LoginPanel extends React.Component {
                 <WhiteSpace size="lg"/>
 
                 <WingBlank>
-                    <a>快速註冊</a>
-                    <a>找回密碼</a>
+                    <Flex>
+                        <Flex.Item>
+                            <div className="txt-left">
+                                <Link to="/account/register" className="default">會員註冊</Link>
+                            </div>
+                        </Flex.Item>
+                        <Flex.Item>
+                            <div className="txt-right">
+                                <Link to="/account/password" className="default">找回密碼</Link>
+                            </div>
+                        </Flex.Item>
+                    </Flex>
                 </WingBlank>
 
             </div>
         );
     }
-
 
     changeUsername(value) {
         const username = value.replace(/\s/g, '');
@@ -88,14 +99,13 @@ class LoginPanel extends React.Component {
     }
 
     login() {
-
         this.props.loginHandler(this.state.username, this.state.password);
     }
 }
 
-LoginPanel.propTypes = {
+LoginView.propTypes = {
     logging: PropTypes.bool.isRequired,     //是否登入中
     loginHandler: PropTypes.func.isRequired //登入处理方法
 };
 
-export default LoginPanel;
+export default LoginView;

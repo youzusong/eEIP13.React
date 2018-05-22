@@ -2,9 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import fetch  from 'isomorphic-fetch';
 import * as UserActions from 'root/redux/constants/User';
-import LoginPanel from 'root/components/User/LoginPanel';
-import PageNavBar from 'root/components/Common/PageNavBar';
-
+import DefaultLayout from 'root/containers/Common/DefaultLayout';
+import LoginView from 'root/components/Account/LoginView';
 
 class AccountLogin extends React.Component {
 
@@ -21,12 +20,9 @@ class AccountLogin extends React.Component {
         const {logging} = this.state;
 
         return (
-            <div>
-                <PageNavBar title="會員登入" />
-                <LoginPanel logging={logging} loginHandler={this.loginHandler} />
-
-            </div>
-
+            <DefaultLayout pageTitle="會員登入">
+                <LoginView logging={logging} loginHandler={this.loginHandler} />
+            </DefaultLayout>
         );
     }
 

@@ -24,7 +24,7 @@ class HomeIndex extends React.Component {
                 <br/>
                 <Link to='/home/test'>Test Page</Link>
                 <br/>
-                <Link to='/user/login'>User Login</Link>
+                <Link to='/account/login'>User Login</Link>
 
                 <h2>{RouteUtil.BuildPath(RoutePath.PROD_DETAIL, {id: 123, name: 'zzz'})}</h2>
 
