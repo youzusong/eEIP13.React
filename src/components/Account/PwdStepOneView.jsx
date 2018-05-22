@@ -38,7 +38,8 @@ class PwdStepOneView extends React.Component {
                     <Button
                         type="primary"
                         size="large"
-                        loading={false}
+                        loading={checking}
+                        disabled={checking}
                         onClick={this.checkAccount}
                     >
                         {
@@ -66,8 +67,8 @@ class PwdStepOneView extends React.Component {
 }
 
 PwdStepOneView.propTypes = {
-    checking: PropTypes.bool.isRequired,            //
-    checkResult: PropTypes.bool,         //
+    checking: PropTypes.bool.isRequired,            //驗證中
+    checkResult: PropTypes.bool,                    //驗證結果
     checkAccountHandler: PropTypes.func.isRequired  //驗證處理方法
 };
 

@@ -45,7 +45,12 @@ class Password extends React.Component {
                 checkResult: false
             });
 
-            Toast.fail('該帳號不存在', 2);
+            Toast.fail('該帳號不存在', 2,()=>{
+                this.setState({
+                    checkResult:null
+                });
+            });
+
         }, 2000);
     }
 }
