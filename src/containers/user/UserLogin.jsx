@@ -37,15 +37,17 @@ class AccountLogin extends React.Component {
         if (this.state.logging)
             return;
 
-        const username = eUsername.value;
-        const password = ePassword.value;
+        const postData = {
+            username: eUsername.value,
+            password: ePassword.value
+        };
 
-        if(!username){
+        if(!postData.username){
             eUsername.focus();
             return;
         }
 
-        if(!password){
+        if(!postData.password){
             ePassword.focus();
             return;
         }
@@ -55,17 +57,13 @@ class AccountLogin extends React.Component {
         });
 
         try {
-
             fetch('http://localhost:3000/user/login', {
                 method: 'POST',
-                mode: 'cors',
+                //mode: 'cors',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                    //'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
-                body: 'username=' + username + '&password=' + password,
-                //body: JSON.stringify({username: username.value, password: password.value})
-
+                body: JSON.stringify(postData)
             }).then(res => {
                 return res.json();
             }).then(json => {
@@ -98,7 +96,7 @@ class AccountLogin extends React.Component {
             });
         }
         catch (ex) {
-
+            console.log(ex);
         }
     }
 }

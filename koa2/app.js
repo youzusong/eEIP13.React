@@ -40,24 +40,19 @@ app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
 
 // 跨域
-//app.use(cors());
+app.use(cors());
 
+/*
 app.use(async (ctx, next) => {
-    if(ctx.request.method == 'OPTIONS'){
-        //ctx.response.status = 200;
-    }
 
-    //console.log('zzzzzzzzzzzz');
-
-    /*
     ctx.set('Access-Control-Allow-Origin', '*');
-    ctx.set('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT');
-    ctx.set('Access-Control-Allow-Headers', 'Content-Type');
-    ctx.set('Access-Control-Max-Age', 3600);
-    */
+    ctx.set('Access-Control-Allow-Headers', '*');
+    ctx.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
 
     await next();
 });
+*/
+
 
 // error-handling
 app.on('error', (err, ctx) => {
