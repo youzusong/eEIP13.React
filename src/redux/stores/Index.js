@@ -4,7 +4,12 @@ import thunk from 'redux-thunk';
 
 const getPreState = () => {
     return {
-
+        user: {
+            logged: true,
+            userData: {
+                username: 'zzz'
+            }
+        }
     };
 };
 

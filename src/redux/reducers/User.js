@@ -15,7 +15,7 @@ function userReducer(state = initState, action) {
             return Object.assign({}, state, {logged: false, userData: null});
 
         default:
-            return Object.assign({}, state, {logged: false, userData: null});
+            return Object.assign({}, state);
     }
 }
 
