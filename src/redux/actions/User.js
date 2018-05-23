@@ -12,3 +12,18 @@ export function logout() {
         type: UserActions.USER_LOGOUT
     }
 }
+
+export function loginAysnc(data) {
+    return (dispath, getState) => {
+        dispath({type: 'LOGIN_REQUEST'});
+        setTimeout(() => {
+            try {
+                dispath({type: 'LOGIN_SUCCESS', userData: {username: '123456'}});
+            }
+            catch {
+                dispath({type: 'LOGIN_ERROR', errorMsg: '登入失敗'});
+            }
+        }, 2000);
+
+    };
+}

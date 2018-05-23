@@ -2,7 +2,11 @@ import * as UserActions from 'root/redux/constants/User';
 
 let initState = {
     logged: false,
-    userData: null
+    userData: null,
+
+    logging: false,
+    error: null,
+    data: null
 };
 
 function userReducer(state = initState, action) {
