@@ -7,20 +7,14 @@ require('../Common/Style.css');
 class LoginView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            username: null,
-            password: null,
-            disabled: true
-        };
-
-        this.changeUsername = this.changeUsername.bind(this);
-        this.changePassword = this.changePassword.bind(this);
-        this.login = this.login.bind(this);
     }
 
     render() {
 
-        const {logging} = this.props;
+        const {username, password, logging, error} = this.props;
+        const disabeld = !username || !password;
+
+        console.log('LoginView - Render');
 
         return (
             <div>
@@ -29,17 +23,17 @@ class LoginView extends React.Component {
                 <InputItem
                     type="text"
                     placeholder="請輸入用戶名"
-                    value={this.state.username}
-                    onChange={this.changeUsername}
+                    value={username}
+                    onChange={this.props.changeUsernameHandler}
                     clear
                 >
                     帳號
                 </InputItem>
                 <InputItem
                     type="password"
-                    value={this.state.password}
+                    value={password}
                     placeholder="請輸入密碼"
-                    onChange={this.changePassword}
+                    onChange={this.props.changePasswordHandler}
                     clear
                 >
                     密碼
@@ -51,9 +45,9 @@ class LoginView extends React.Component {
                     <Button
                         type="primary"
                         size="large"
-                        disabled={this.state.disabled || logging}
+                        disabled={disabeld || logging}
                         loading={logging}
-                        onClick={this.login}
+                        onClick={this.props.loginHandler}
                     >
                         登入
                     </Button>
@@ -79,33 +73,11 @@ class LoginView extends React.Component {
             </div>
         );
     }
-
-    changeUsername(value) {
-        const username = value.replace(/\s/g, '');
-        const password = this.state.password;
-        this.setState({
-            username: username,
-            disabled: !username || !password
-        });
-    }
-
-    changePassword(value) {
-        const password = value.replace(/\s/g, '');
-        const username = this.state.username;
-        this.setState({
-            password: password,
-            disabled: !username || !password
-        });
-    }
-
-    login() {
-        this.props.loginHandler(this.state.username, this.state.password);
-    }
 }
 
 LoginView.propTypes = {
-    logging: PropTypes.bool.isRequired,     //是否登入中
-    loginHandler: PropTypes.func.isRequired //登入处理方法
+    //logging: PropTypes.bool.isRequired,     //是否登入中
+    //loginHandler: PropTypes.func.isRequired //登入处理方法
 };
 
 export default LoginView;

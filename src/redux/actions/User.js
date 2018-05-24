@@ -3,7 +3,7 @@ import * as UserActions from 'root/redux/constants/User';
 export function login(userData) {
     return {
         type: UserActions.USER_LOGIN,
-        userData: userData
+        action: userData
     }
 }
 
@@ -15,13 +15,18 @@ export function logout() {
 
 export function loginAysnc(data) {
     return (dispath, getState) => {
-        dispath({type: 'LOGIN_REQUEST'});
+
+        console.log('登入名稱：' + data.username);
+        console.log('登入密碼：' + data.password);
+
+        dispath({type: UserActions.LOGIN_REQUEST});
         setTimeout(() => {
             try {
-                dispath({type: 'LOGIN_SUCCESS', userData: {username: '123456'}});
+                throw new Error('test');
+                dispath({type: UserActions.LOGIN_SUCCESS, payload: {username: '123456'}});
             }
-            catch {
-                dispath({type: 'LOGIN_ERROR', errorMsg: '登入失敗'});
+            catch(ex) {
+                dispath({type: UserActions.LOGIN_ERROR, payload: '登入失敗'});
             }
         }, 2000);
 
