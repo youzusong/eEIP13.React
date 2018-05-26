@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import fetch  from 'isomorphic-fetch';
-import * as UserActions from 'root/redux/actions/User';
+import * as UserAction from 'root/redux/actions/UserAction';
 import DefaultLayout from 'root/containers/Common/DefaultLayout';
+import ErrorView from 'root/components/Common/ErrorView';
 import LoginView from 'root/components/Account/LoginView';
 
 class AccountLogin extends React.Component {
@@ -11,18 +12,20 @@ class AccountLogin extends React.Component {
         super(props);
         this.state = {
             username: null,
-            password: null
+            password: null,
+            logging: false,
+            error: null
         };
 
         this.loginHandler = this.loginHandler.bind(this);
         this.changeUsernameHandler = this.changeUsernameHandler.bind(this);
         this.changePasswordHandler = this.changePasswordHandler.bind(this);
+        this.errorCloseHandler = this.errorCloseHandler.bind(this);
     }
 
     render() {
 
-        const {logging, error} = this.props.user;
-        const{username,password}=this.state;
+        const {username, password, logging, error} = this.state;
 
         return (
             <DefaultLayout pageTitle="會員登入">
@@ -31,6 +34,7 @@ class AccountLogin extends React.Component {
                     password={password}
                     logging={logging}
                     error={error}
+                    errorCloseHandler={this.errorCloseHandler}
                     loginHandler={this.loginHandler}
                     changeUsernameHandler={this.changeUsernameHandler}
                     changePasswordHandler={this.changePasswordHandler}/>
@@ -45,6 +49,7 @@ class AccountLogin extends React.Component {
         }
     }
 
+    //更改登入帳號
     changeUsernameHandler(value) {
         value = value.replace(/\s/g, '');
         this.setState({
@@ -52,6 +57,7 @@ class AccountLogin extends React.Component {
         });
     }
 
+    //更改登入密碼
     changePasswordHandler(value) {
         value = value.replace(/\s/g, '');
         this.setState({
@@ -59,86 +65,72 @@ class AccountLogin extends React.Component {
         });
     }
 
-    // 登入
+    //執行登入
     loginHandler() {
-        const {username, password} = this.state;
-        this.props.loginAysnc({
-            username: username,
-            password: password
-        });
-
-        /*
         if (this.state.logging)
             return;
 
         const postData = {
-            username: username,
-            password: passowrd
+            username: this.state.username,
+            password: this.state.password
         };
 
-        this.setState({
-            logging: true
-        });
+        this.setState({logging: true});
 
-        try {
-            fetch('http://localhost:3000/user/login', {
-                method: 'POST',
-                //mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(postData)
-            }).then(res => {
-                return res.json();
-            }).then(json => {
-                if (json.error) {
-                    alert(json.error);
-                    this.setState({
-                        logging: false
-                    });
-                } else {
-                    alert(json.username + '登入成功');
-
-                    // dispatch
-                    this.props.login({
-                        username: json.username
-                    });
-
-                    // 页面跳转
-                    let fromUrl = '';
-                    if (this.props.location.state != null)
-                        fromUrl = this.props.location.state.from;
-
-                    if (!fromUrl) fromUrl = '/';
-                    this.props.history.push(fromUrl);
-                }
-            }).catch(err => {
-                alert(err);
+        fetch('http://localhost:3000/user/login', {
+            method: 'POST',
+            //mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        }).then(res => {
+            return res.json();
+        }).then(json => {
+            if (json.error) {
+                console.log('ss');
                 this.setState({
-                    logging: false
+                    logging: false,
+                    error: json.error
                 });
+            } else {
+                // dispatch
+                this.props.login({
+                    username: json.username
+                });
+
+                // 页面跳转
+                let fromUrl = '';
+                if (this.props.location.state != null)
+                    fromUrl = this.props.location.state.from;
+
+                if (!fromUrl) fromUrl = '/';
+                this.props.history.push(fromUrl);
+            }
+        }).catch(err => {
+            //console.log(err);
+            this.setState({
+                logging: false,
+                error: '系統錯誤'
             });
-        }
-        catch (ex) {
-            console.log(ex);
-        }
-        */
+        });
+    }
+
+    //關閉錯誤
+    errorCloseHandler() {
+        this.setState({error: null});
     }
 }
 
 function mapStateToProps(store) {
     return {
-        logged: store.user.logged,
         user: store.user
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        loginAysnc: (data) => {
-            console.log('mapDispatchToProps - loginAsync');
-            dispatch(UserActions.loginAysnc(data));
-        }
+        login: UserAction.Events.login
     }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Flex, InputItem, Button, WhiteSpace, WingBlank  } from 'antd-mobile';
+import { Flex, InputItem, Button, WhiteSpace, WingBlank, Toast  } from 'antd-mobile';
 require('../Common/Style.css');
 
 class LoginView extends React.Component {
@@ -11,10 +11,8 @@ class LoginView extends React.Component {
 
     render() {
 
-        const {username, password, logging, error} = this.props;
-        const disabeld = !username || !password;
-
-        console.log('LoginView - Render');
+        const {username, password, logging} = this.props;
+        const loginDisabled = logging || !username || !password;
 
         return (
             <div>
@@ -24,6 +22,7 @@ class LoginView extends React.Component {
                     type="text"
                     placeholder="請輸入用戶名"
                     value={username}
+                    disabled={logging}
                     onChange={this.props.changeUsernameHandler}
                     clear
                 >
@@ -33,6 +32,7 @@ class LoginView extends React.Component {
                     type="password"
                     value={password}
                     placeholder="請輸入密碼"
+                    disabled={logging}
                     onChange={this.props.changePasswordHandler}
                     clear
                 >
@@ -45,7 +45,7 @@ class LoginView extends React.Component {
                     <Button
                         type="primary"
                         size="large"
-                        disabled={disabeld || logging}
+                        disabled={loginDisabled}
                         loading={logging}
                         onClick={this.props.loginHandler}
                     >
@@ -73,11 +73,19 @@ class LoginView extends React.Component {
             </div>
         );
     }
+
+    componentDidMount() {
+        const {error} = this.props;
+        console.log(error);
+        if (error) {
+            Toast(error, 2, this.props.errorCloseHandler)
+        }
+    }
 }
 
 LoginView.propTypes = {
-    //logging: PropTypes.bool.isRequired,     //是否登入中
-    //loginHandler: PropTypes.func.isRequired //登入处理方法
+    logging: PropTypes.bool.isRequired,
+    loginHandler: PropTypes.func.isRequired
 };
 
 export default LoginView;
