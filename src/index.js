@@ -5,13 +5,15 @@ import { Provider } from 'react-redux';
 
 import appStore from './redux/stores/Index';
 
-import HomeIndex from './containers/home/HomeIndex';
-import ProductSearch from './containers/product/Search';
-import ProductDetail from './containers/product/Detail';
-import UserLogin from './containers/user/UserLogin';
-import UserIndex from './containers/user/UserIndex';
+import HomeIndex from './containers/Home/Index';
+import ProductSearch from './containers/Product/Search';
+import ProductDetail from './containers/Product/Detail';
+import AccountLogin from './containers/Account/Login';
+import AccountRegister from './containers/Account/Register';
+import AccountPassword from './containers/Account/Password';
+import UserIndex from './containers/User/Index';
 
-import HomeTest from './containers/home/HomeTest';
+import HomeTest from './containers/Home/Test';
 import UserRoute from './routes/UserRoute';
 
 if (module.hot) {
@@ -23,9 +25,13 @@ ReactDOM.render(
         <HashRouter>
             <Switch>
                 <Route exact path='/' component={HomeIndex} />
+
                 <Route path='/search' component={ProductSearch} />
                 <Route path='/prod/:id' component={ProductDetail} />
-                <Route path='/user/login' component={UserLogin} />
+
+                <Route path='/account/login' component={AccountLogin} />
+                <Route path='/account/register' component={AccountRegister} />
+                <Route path='/account/password' component={AccountPassword} />
 
                 <UserRoute path='/user/index' component={UserIndex} />
                 <UserRoute path='/home/test' component={HomeTest} />

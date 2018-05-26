@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter} from 'react-router-dom';
 import { NavBar, Icon } from 'antd-mobile';
 
-class PageNavBar extends React.Component{
+class NavBarView extends React.Component{
     constructor(props){
         super(props);
     }
@@ -23,4 +23,4 @@ class PageNavBar extends React.Component{
     }
 }
 
-export default withRouter(PageNavBar);
+export default withRouter(NavBarView);

@@ -1,32 +1,40 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import fetch  from 'isomorphic-fetch';
-import * as UserActions from 'root/redux/constants/User';
-import LoginPanel from 'root/components/User/LoginPanel';
-import PageNavBar from 'root/components/Common/PageNavBar';
-
+import * as UserActions from 'root/redux/actions/User';
+import DefaultLayout from 'root/containers/Common/DefaultLayout';
+import LoginView from 'root/components/Account/LoginView';
 
 class AccountLogin extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            logging: false
-        }
+            username: null,
+            password: null
+        };
 
         this.loginHandler = this.loginHandler.bind(this);
+        this.changeUsernameHandler = this.changeUsernameHandler.bind(this);
+        this.changePasswordHandler = this.changePasswordHandler.bind(this);
     }
 
     render() {
-        const {logging} = this.state;
+
+        const {logging, error} = this.props.user;
+        const{username,password}=this.state;
 
         return (
-            <div>
-                <PageNavBar title="會員登入" />
-                <LoginPanel logging={logging} loginHandler={this.loginHandler} />
-
-            </div>
-
+            <DefaultLayout pageTitle="會員登入">
+                <LoginView
+                    username={username}
+                    password={password}
+                    logging={logging}
+                    error={error}
+                    loginHandler={this.loginHandler}
+                    changeUsernameHandler={this.changeUsernameHandler}
+                    changePasswordHandler={this.changePasswordHandler}/>
+            </DefaultLayout>
         );
     }
 
@@ -37,8 +45,29 @@ class AccountLogin extends React.Component {
         }
     }
 
+    changeUsernameHandler(value) {
+        value = value.replace(/\s/g, '');
+        this.setState({
+            username: value
+        });
+    }
+
+    changePasswordHandler(value) {
+        value = value.replace(/\s/g, '');
+        this.setState({
+            password: value
+        });
+    }
+
     // 登入
-    loginHandler(username, passowrd) {
+    loginHandler() {
+        const {username, password} = this.state;
+        this.props.loginAysnc({
+            username: username,
+            password: password
+        });
+
+        /*
         if (this.state.logging)
             return;
 
@@ -93,19 +122,22 @@ class AccountLogin extends React.Component {
         catch (ex) {
             console.log(ex);
         }
+        */
     }
 }
 
 function mapStateToProps(store) {
     return {
-        logged: store.user.logged
+        logged: store.user.logged,
+        user: store.user
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        login: (userData) => {
-            dispatch({type: UserActions.USER_LOGIN, userData: userData})
+        loginAysnc: (data) => {
+            console.log('mapDispatchToProps - loginAsync');
+            dispatch(UserActions.loginAysnc(data));
         }
     }
 }
