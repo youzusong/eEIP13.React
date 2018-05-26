@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Toast } from 'antd-mobile';
 import fetch  from 'isomorphic-fetch';
 
 import DefaultLayout from 'root/containers/Common/DefaultLayout';
@@ -75,7 +76,7 @@ class AccountLogin extends React.Component {
             password: this.state.password
         };
 
-        this.props.toggleLoading(true);
+        Toast.loading(null, 0);
 
         fetch('http://localhost:3000/user/login', {
             method: 'POST',
@@ -87,11 +88,13 @@ class AccountLogin extends React.Component {
         }).then(res => {
             return res.json();
         }).then(json => {
-            this.props.toggleLoading(false);
 
             if (json.error) {
-                this.props.toggleError(json.error);
+                Toast.fail(json.error, 2);
+                //this.props.toggleError(json.error);
             } else {
+                Toast.hide();
+
                 //登入
                 this.props.login({
                     username: json.username
@@ -106,8 +109,7 @@ class AccountLogin extends React.Component {
                 this.props.history.push(fromUrl);
             }
         }).catch(err => {
-            this.props.toggleLoading(false);
-            //this.props.toggleError('系統錯誤');
+            Toast.fail('登入失敗', 2);
         });
     }
 }

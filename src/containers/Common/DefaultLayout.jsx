@@ -18,6 +18,7 @@ class DefaultLayout extends React.Component {
                     {this.props.children}
                 </main>
                 <footer>
+
                 </footer>
             </RootLayout>
         );
@@ -26,6 +27,6 @@ class DefaultLayout extends React.Component {
 
 RootLayout.propTypes = {
     pageTitle : PropTypes.string  //頁面標題
-}
+};
 
 export default DefaultLayout;

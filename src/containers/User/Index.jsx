@@ -1,4 +1,5 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as UserActions from 'root/redux/actions/UserAction';
@@ -26,16 +27,13 @@ class UserIndex extends React.Component{
     }
 
     logout() {
-        alert('sss');
         this.props.logout();
     }
 
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        logout: UserActions.Events.logout
-    }
+    return bindActionCreators(UserActions.Events, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(UserIndex);
