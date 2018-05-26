@@ -34,7 +34,7 @@ ReactDOM.render(
                 <Route path='/account/password' component={AccountPassword} />
 
                 <UserRoute path='/user/index' component={UserIndex} />
-                <UserRoute path='/home/test' component={HomeTest} />
+                <Route path='/home/test' component={HomeTest} />
 
             </Switch>
         </HashRouter>
