@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as UserActions from 'root/redux/constants/User';
+import * as UserActions from 'root/redux/actions/UserAction';
 
 class UserIndex extends React.Component{
     constructor(props){
@@ -34,9 +34,7 @@ class UserIndex extends React.Component{
 
 function mapDispatchToProps(dispatch) {
     return {
-        logout: () => {
-            dispatch({type: UserActions.USER_LOGOUT});
-        }
+        logout: UserActions.Events.logout
     }
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import RootLayout from './RootLayout';
 import NavBarView from 'root/components/Common/NavBarView';
 
 class DefaultLayout extends React.Component {
@@ -9,7 +10,7 @@ class DefaultLayout extends React.Component {
 
     render() {
         return (
-            <div>
+            <RootLayout>
                 <header>
                     <NavBarView title={this.props.pageTitle}/>
                 </header>
@@ -17,14 +18,13 @@ class DefaultLayout extends React.Component {
                     {this.props.children}
                 </main>
                 <footer>
-
                 </footer>
-            </div>
+            </RootLayout>
         );
     }
 }
 
-DefaultLayout.propTypes = {
+RootLayout.propTypes = {
     pageTitle : PropTypes.string  //頁面標題
 }
 

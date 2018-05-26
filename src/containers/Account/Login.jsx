@@ -1,31 +1,32 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import fetch  from 'isomorphic-fetch';
-import * as UserAction from 'root/redux/actions/UserAction';
+
 import DefaultLayout from 'root/containers/Common/DefaultLayout';
-import ErrorView from 'root/components/Common/ErrorView';
 import LoginView from 'root/components/Account/LoginView';
+
+import * as UserAction from 'root/redux/actions/UserAction';
+import * as CommonAction from "root/redux/actions/CommonAction";
 
 class AccountLogin extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            username: null,
-            password: null,
-            logging: false,
-            error: null
+            username: null, //登入帳號
+            password: null, //登入密碼
+            logging: false
         };
 
         this.loginHandler = this.loginHandler.bind(this);
         this.changeUsernameHandler = this.changeUsernameHandler.bind(this);
         this.changePasswordHandler = this.changePasswordHandler.bind(this);
-        this.errorCloseHandler = this.errorCloseHandler.bind(this);
     }
 
     render() {
 
-        const {username, password, logging, error} = this.state;
+        const {username, password, logging} = this.state;
 
         return (
             <DefaultLayout pageTitle="會員登入">
@@ -33,7 +34,6 @@ class AccountLogin extends React.Component {
                     username={username}
                     password={password}
                     logging={logging}
-                    error={error}
                     errorCloseHandler={this.errorCloseHandler}
                     loginHandler={this.loginHandler}
                     changeUsernameHandler={this.changeUsernameHandler}
@@ -44,7 +44,7 @@ class AccountLogin extends React.Component {
 
     componentWillMount() {
         // 如果已登入，则跳转到用户中心
-        if (this.props.logged) {
+        if (this.props.user.logged) {
             this.props.history.push('/user/index');
         }
     }
@@ -75,7 +75,7 @@ class AccountLogin extends React.Component {
             password: this.state.password
         };
 
-        this.setState({logging: true});
+        this.props.toggleLoading(true);
 
         fetch('http://localhost:3000/user/login', {
             method: 'POST',
@@ -87,19 +87,17 @@ class AccountLogin extends React.Component {
         }).then(res => {
             return res.json();
         }).then(json => {
+            this.props.toggleLoading(false);
+
             if (json.error) {
-                console.log('ss');
-                this.setState({
-                    logging: false,
-                    error: json.error
-                });
+                this.props.toggleError(json.error);
             } else {
-                // dispatch
+                //登入
                 this.props.login({
                     username: json.username
                 });
 
-                // 页面跳转
+                //頁面跳轉
                 let fromUrl = '';
                 if (this.props.location.state != null)
                     fromUrl = this.props.location.state.from;
@@ -108,17 +106,9 @@ class AccountLogin extends React.Component {
                 this.props.history.push(fromUrl);
             }
         }).catch(err => {
-            //console.log(err);
-            this.setState({
-                logging: false,
-                error: '系統錯誤'
-            });
+            this.props.toggleLoading(false);
+            //this.props.toggleError('系統錯誤');
         });
-    }
-
-    //關閉錯誤
-    errorCloseHandler() {
-        this.setState({error: null});
     }
 }
 
@@ -129,9 +119,10 @@ function mapStateToProps(store) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        login: UserAction.Events.login
-    }
+    return Object.assign({},
+        bindActionCreators(UserAction.Events, dispatch),
+        bindActionCreators(CommonAction.Events, dispatch)
+    );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountLogin);

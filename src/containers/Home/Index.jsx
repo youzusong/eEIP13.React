@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import fetch  from 'isomorphic-fetch';
+import RootLayout from '../Common/RootLayout';
 import * as RoutePath from 'root/constants/RoutePath';
 import RouteUtil from 'root/utils/RouteUtil';
+
 
 class HomeIndex extends React.Component {
 
@@ -13,9 +14,7 @@ class HomeIndex extends React.Component {
 
     render() {
         return (
-            <div>
-                首頁
-
+            <RootLayout>
                 <br/>
                 <input type="text" placeholder="商品搜索" onClick={this.clickSearch}/>
 
@@ -28,7 +27,7 @@ class HomeIndex extends React.Component {
 
                 <h2>{RouteUtil.BuildPath(RoutePath.PROD_DETAIL, {id: 123, name: 'zzz'})}</h2>
 
-            </div>
+            </RootLayout>
         );
     }
 
