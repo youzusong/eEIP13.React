@@ -73,14 +73,6 @@ class LoginView extends React.Component {
             </div>
         );
     }
-
-    componentDidMount() {
-        const {error} = this.props;
-        console.log(error);
-        if (error) {
-            Toast(error, 2, this.props.errorCloseHandler)
-        }
-    }
 }
 
 LoginView.propTypes = {

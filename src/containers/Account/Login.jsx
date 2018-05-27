@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import { Toast } from 'antd-mobile';
 import fetch  from 'isomorphic-fetch';
 
+import * as UserAction from 'root/redux/actions/UserAction';
 import DefaultLayout from 'root/containers/Common/DefaultLayout';
 import LoginView from 'root/components/Account/LoginView';
-
-import * as UserAction from 'root/redux/actions/UserAction';
-import * as CommonAction from "root/redux/actions/CommonAction";
 
 class AccountLogin extends React.Component {
 
@@ -48,6 +46,19 @@ class AccountLogin extends React.Component {
         if (this.props.user.logged) {
             this.props.history.push('/user/index');
         }
+    }
+
+    componentDidMount() {
+
+    }
+
+    getFromUrl() {
+        let fromUrl = '';
+        if (this.props.location.state != null)
+            fromUrl = this.props.location.state.from;
+
+        if (!fromUrl) fromUrl = '/';
+        return fromUrl;
     }
 
     //更改登入帳號
@@ -101,11 +112,7 @@ class AccountLogin extends React.Component {
                 });
 
                 //頁面跳轉
-                let fromUrl = '';
-                if (this.props.location.state != null)
-                    fromUrl = this.props.location.state.from;
-
-                if (!fromUrl) fromUrl = '/';
+                const fromUrl = this.getFromUrl();
                 this.props.history.push(fromUrl);
             }
         }).catch(err => {
@@ -121,10 +128,7 @@ function mapStateToProps(store) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return Object.assign({},
-        bindActionCreators(UserAction.Events, dispatch),
-        bindActionCreators(CommonAction.Events, dispatch)
-    );
+    return bindActionCreators(UserAction.Events, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountLogin);
