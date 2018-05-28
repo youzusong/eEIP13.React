@@ -1,57 +1,21 @@
 import React from 'react';
-import { Toast } from 'antd-mobile';
-import DefaultLayout from 'root/containers/Common/DefaultLayout';
-import PwdStepOneView from 'root/components/Account/PwdStepOneView';
+import DefaultLayout from '../Common/DefaultLayout';
+import PwdStepOne from './Partial/PwdStepOne';
 
 class Password extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            checking: false,
-            checkResult: null
-        };
-
-        this.checkAccountHandler = this.checkAccountHandler.bind(this);
     }
 
     render() {
         return (
             <DefaultLayout pageTitle="找回密碼">
-                <PwdStepOneView
-                    checking={this.state.checking}
-                    checkResult={this.state.checkResult}
-                    checkAccountHandler={this.checkAccountHandler}/>
+
+                {/* 步驟一 */}
+                <PwdStepOne/>
+
             </DefaultLayout>
         )
-    }
-
-    checkAccountHandler(account) {
-        if (this.state.checking) {
-            return;
-        }
-
-        if (!account) {
-            Toast.info('請輸入帳號', 2);
-            return;
-        }
-
-        this.setState({
-            checking: true
-        });
-
-        setTimeout(() => {
-            this.setState({
-                checking: false,
-                checkResult: false
-            });
-
-            Toast.fail('該帳號不存在', 2,()=>{
-                this.setState({
-                    checkResult:null
-                });
-            });
-
-        }, 2000);
     }
 }
 

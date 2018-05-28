@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Flex, InputItem, Button, WhiteSpace, WingBlank, Toast  } from 'antd-mobile';
 require('../Common/Style.css');
 
-class LoginView extends React.Component {
+class LoginFormView extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -23,7 +23,7 @@ class LoginView extends React.Component {
                     placeholder="請輸入用戶名"
                     value={username}
                     disabled={logging}
-                    onChange={this.props.changeUsernameHandler}
+                    onChange={this.props.onChangeUsername}
                     clear
                 >
                     帳號
@@ -33,7 +33,7 @@ class LoginView extends React.Component {
                     value={password}
                     placeholder="請輸入密碼"
                     disabled={logging}
-                    onChange={this.props.changePasswordHandler}
+                    onChange={this.props.onChangePassword}
                     clear
                 >
                     密碼
@@ -46,10 +46,9 @@ class LoginView extends React.Component {
                         type="primary"
                         size="large"
                         disabled={loginDisabled}
-                        loading={logging}
-                        onClick={this.props.loginHandler}
+                        onClick={this.props.onLogin}
                     >
-                        登入
+                        {logging ? '登入中...' : '登入'}
                     </Button>
                 </WingBlank>
 
@@ -75,9 +74,13 @@ class LoginView extends React.Component {
     }
 }
 
-LoginView.propTypes = {
-    logging: PropTypes.bool.isRequired,
-    loginHandler: PropTypes.func.isRequired
+LoginFormView.propTypes = {
+    username: PropTypes.string,          //登入帳號
+    password: PropTypes.string,          //登入密碼
+    logging: PropTypes.bool.isRequired,  //登入中
+    onChangeUsername: PropTypes.func,    //更改登入帳號
+    onChangePassword: PropTypes.func,    //更改登入密碼
+    onLogin: PropTypes.func.isRequired   //執行登入
 };
 
-export default LoginView;
+export default LoginFormView;

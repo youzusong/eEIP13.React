@@ -4,72 +4,55 @@ import { Link } from 'react-router-dom';
 import { InputItem, Button, WhiteSpace, WingBlank,Toast  } from 'antd-mobile';
 require('../Common/Style.css');
 
-class PwdStepOneView extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            account: null
-        };
+const PwdStepOneView = (props) => {
 
-        this.changeAccount = this.changeAccount.bind(this);
-        this.checkAccount = this.checkAccount.bind(this);
-    }
+    return (
+        <div>
+            <WhiteSpace size="lg"/>
 
-    render() {
-        const {checking,checkResult} = this.props;
+            <InputItem
+                type="text"
+                placeholder="請輸入帳號"
+                value={props.username}
+                onChange={props.onChangeUsername}
+                clear
+            >
+                帳號
+            </InputItem>
+            <InputItem
+                type="text"
+                placeholder="請輸入信箱"
+                value={props.email}
+                onChange={props.onChangeEmail}
+                clear
+            >
+                信箱
+            </InputItem>
 
-        return (
-            <div>
-                <WhiteSpace size="lg"/>
+            <WhiteSpace size="lg"/>
 
-                <InputItem
-                    type="text"
-                    placeholder="請輸入用戶名"
-                    value={this.state.account}
-                    onChange={this.changeAccount}
-                    clear
+            <WingBlank>
+                <Button
+                    type="primary"
+                    size="large"
+                    disabled={props.checking || !props.username || !props.email}
+                    onClick={props.onCheckAccount}
                 >
-                    帳號
-                </InputItem>
+                    {props.checking ? '驗證中...' : '完成驗證'}
+                </Button>
+            </WingBlank>
 
-                <WhiteSpace size="lg"/>
-
-                <WingBlank>
-                    <Button
-                        type="primary"
-                        size="large"
-                        loading={checking}
-                        disabled={checking}
-                        onClick={this.checkAccount}
-                    >
-                        {
-                            checking
-                                ? '驗證中...'
-                                : (checkResult == null ? '點擊完成驗證' : (checkResult ? '驗證成功' : '驗證失敗'))
-                        }
-                    </Button>
-                </WingBlank>
-
-            </div>
-        );
-    }
-
-    changeAccount(value) {
-        const account = value.replace(/\s/g, '');
-        this.setState({
-            account: account
-        });
-    }
-
-    checkAccount() {
-        this.props.checkAccountHandler(this.state.account);
-    }
-}
+        </div>
+    );
+};
 
 PwdStepOneView.propTypes = {
-    checking: PropTypes.bool.isRequired,            //驗證中
-    checkResult: PropTypes.bool,                    //驗證結果
-    checkAccountHandler: PropTypes.func.isRequired  //驗證處理方法
+    username: PropTypes.string,           //用戶名
+    email: PropTypes.string,              //信箱
+    checking: PropTypes.bool,             //驗證中
+    onChangeUsername: PropTypes.func,     //更改用戶名
+    onChangeEmail: PropTypes.func,        //更改信箱
+    onCheckAccount: PropTypes.func        //驗證處理方法
 };
 
 export default PwdStepOneView;
