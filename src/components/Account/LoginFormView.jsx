@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Flex, InputItem, Button, WhiteSpace, WingBlank, Toast  } from 'antd-mobile';
+import { Flex, InputItem, Button, WhiteSpace, WingBlank } from 'antd-mobile';
 require('../Common/Style.css');
 
 class LoginFormView extends React.Component {
@@ -20,7 +20,7 @@ class LoginFormView extends React.Component {
 
                 <InputItem
                     type="text"
-                    placeholder="請輸入用戶名"
+                    placeholder="請輸入帳號"
                     value={username}
                     disabled={logging}
                     onChange={this.props.onChangeUsername}

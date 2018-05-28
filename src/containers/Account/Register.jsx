@@ -1,5 +1,6 @@
 import React from 'react';
-import DefaultLayout from 'root/containers/Common/DefaultLayout';
+import DefaultLayout from '../Common/DefaultLayout';
+import RegisterForm from './Partial/RegisterForm';
 
 class Register extends React.Component{
     constructor(props){
@@ -9,7 +10,7 @@ class Register extends React.Component{
     render(){
         return(
             <DefaultLayout pageTitle="會員註冊">
-
+                <RegisterForm/>
             </DefaultLayout>
         )
     }
