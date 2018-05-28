@@ -1,4 +1,8 @@
 const StringUtil = {
+    TrimSpace: function (str) {
+        return str.replace(/\s/g, '');
+    },
+
     Format: function (format) {
         let args = arguments;
         let argsLen = args.length;

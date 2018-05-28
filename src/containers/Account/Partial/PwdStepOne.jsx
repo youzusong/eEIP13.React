@@ -52,9 +52,8 @@ class PwdStepOne extends React.Component {
             return;
         }
 
-        Toast.loading(null, 0);
-
         this.setState({checking: true});
+        Toast.loading(null, 0);
 
         const postData = {
             username: this.state.username,
@@ -63,7 +62,6 @@ class PwdStepOne extends React.Component {
 
         setTimeout(() => {
             this.setState({checking: false,});
-
             Toast.fail('該帳號不存在', 2);
 
         }, 1000);

@@ -6,7 +6,7 @@ import { NavBar, Icon } from 'antd-mobile';
 class NavBarPanel extends React.Component {
     constructor(props) {
         super(props);
-        this.onLeftClick = this.onLeftClick.bind(this);
+        this.onGoBack = this.onGoBack.bind(this);
     }
 
     render() {
@@ -14,12 +14,12 @@ class NavBarPanel extends React.Component {
             <NavBar
                 mode="dark"
                 icon={<Icon type="left"/>}
-                onLeftClick={this.onLeftClick}
+                onLeftClick={this.onGoBack}
             >{this.props.title}</NavBar>
         )
     }
 
-    onLeftClick() {
+    onGoBack() {
         this.props.history.goBack(-1);
     }
 }
